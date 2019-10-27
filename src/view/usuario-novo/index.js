@@ -56,7 +56,7 @@ function NovoUsuario() {
 
                 {
                     carregando ? <div class="spinner-border text-danger" role="status">
-                        <span class="sr-only">Loading...</span>
+                        <span class="sr-only">Carregando...</span>
                     </div>
                         : <button onClick={cadastrar} type="button" className="btn btn-lg btn-block mt-3 mb-5 btn-cadastro">Cadastrar</button>
                 }
