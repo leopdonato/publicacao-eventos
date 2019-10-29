@@ -1,0 +1,9 @@
+.btn-publicar{
+    background-color: #614ea6;
+    color: #fff;
+}
+
+.btn-publicar:hover{
+    background-color: #F21667;
+    color: #fff;
+}

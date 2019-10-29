@@ -39,7 +39,7 @@ function Login() {
 
                 <button onClick={logar} className="btn btn-lg btn-block btn-login" type="button">Logar</button>
 
-                <div className="msg-login text-white text-center my-5 text-center">
+                <div className="msg-login text-white text-center my-5">
                     {msgTipo === 'sucesso' && <span><strong>WoW!</strong> Você está conectado! &#128526;</span>}
                     {msgTipo === 'erro' && <span><strong>Ops!</strong> Verifique se a senha ou usuário estão corretos! &#128546;</span>}
 
