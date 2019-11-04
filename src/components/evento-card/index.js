@@ -4,13 +4,13 @@ import firebase from '../../config/firebase';
 
 import './evento-card.css';
 
-function EventoCard({id, img, titulo, detalhes, visualizacoes}) {
+function EventoCard({key, id, img, titulo, detalhes, visualizacoes}) {
 
     const [urlImagem, setUrlImagem] = useState();
 
     useEffect(() => {
         firebase.storage().ref(`imagens/${img}`).getDownloadURL().then(url => setUrlImagem(url));
-    })
+    }, [urlImagem])
     return (
         <div className="col-md-3 col-sm-12">
             <img src={urlImagem} className="card-img-top img-cartao" alt="Imagem do Evento" />
