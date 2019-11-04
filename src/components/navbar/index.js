@@ -20,10 +20,10 @@ function Navbar() {
                     {useSelector(state => state.usuarioLogado) > 0 ?
                         <>
                             <li className="nav-item">
-                                <Link className="nav-link" to="eventocadastro">Publicar evento</Link>
+                                <Link className="nav-link" to="/eventocadastro">Publicar evento</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="">Meus eventos</Link>
+                                <Link className="nav-link" to="/eventos/meus">Meus eventos</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" onClick={()=> dispatch({type:'LOG_OUT'})}>Sair</Link>
@@ -32,10 +32,10 @@ function Navbar() {
                         :
                         <>
                             <li className="nav-item">
-                                <Link className="nav-link" to="novousuario">Cadastrar</Link>
+                                <Link className="nav-link" to="/novousuario">Cadastrar</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="login">Login</Link>
+                                <Link className="nav-link" to="/login">Login</Link>
                             </li>
                         </>
                     }
