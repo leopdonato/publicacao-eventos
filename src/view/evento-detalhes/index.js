@@ -13,14 +13,21 @@ function EventoDetalhes(props) {
     const [carregando, setCarregando] = useState(1);
 
     useEffect(() => {
-        firebase.firestore().collection('eventos').doc(props.match.params.id).get().then(res => {
-            setEvento(res.data());
-            firebase.storage().ref(`imagens/${evento.foto}`).getDownloadURL().then(url => {
-                setUrlImg(url)
-                setCarregando(0);
+        if (carregando) {
+            firebase.firestore().collection('eventos').doc(props.match.params.id).get().then(res => {
+                setEvento(res.data());
+                firebase.firestore().collection('eventos').doc(props.match.params.id).update('visualizacoes', res.data().visualizacoes + 1)
+                firebase.storage().ref(`imagens/${res.data().foto}`).getDownloadURL().then(url => {
+                    setUrlImg(url)
+                    setCarregando(0);
+                });
             });
-        });
-    });
+        } else {
+            firebase.storage().ref(`imagens/${evento.foto}`).getDownloadURL().then(url => setUrlImg(url));
+        }
+    }, []);
+
+    const dateFormat = new Date(evento.data);
 
     return (
         <>
@@ -34,7 +41,7 @@ function EventoDetalhes(props) {
                             <div className="row">
                                 <img src={urlImg} className="img-banner" alt="Banner" />
                                 <div className="col-12 text-right mt-1 visualizacoes">
-                                    <i className="fas fa-eye"></i><span className="ml-2">{evento.visualizacoes}</span>
+                                    <i className="fas fa-eye"></i><span className="ml-2">{evento.visualizacoes + 1}</span>
                                 </div>
                                 <h3 className="mx-auto mt-5 titulo"><strong>{evento.titulo}</strong></h3>
                             </div>
@@ -48,7 +55,7 @@ function EventoDetalhes(props) {
                                 <div className="col-md-3 col-sm-12 box-info p-3 my-2">
                                     <i className="fas fa-calendar-alt fa-2x"></i>
                                     <h5><strong>Data</strong></h5>
-                                    <span className="mt-3">{evento.data}</span>
+                                    <span className="mt-3">{`${dateFormat.getDate()+1}/${dateFormat.getMonth()+1}/${dateFormat.getUTCFullYear()}`}</span>
                                 </div>
 
                                 <div className="col-md-3 col-sm-12 box-info p-3 my-2">
