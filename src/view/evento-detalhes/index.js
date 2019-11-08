@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './evento-detalhes.css';
 import firebase from '../../config/firebase'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Navbar from '../../components/navbar';
 
@@ -11,6 +11,13 @@ function EventoDetalhes(props) {
     const [urlImg, setUrlImg] = useState({});
     const usuarioLogado = useSelector(state => state.usuarioEmail);
     const [carregando, setCarregando] = useState(1);
+    const [excluido, setExcluido] = useState(0);
+
+    function remover(){
+        firebase.firestore().collection('eventos').doc(props.match.params.id).delete().then(() => {
+            setExcluido(1);
+        })
+    }
 
     useEffect(() => {
         if (carregando) {
@@ -32,6 +39,9 @@ function EventoDetalhes(props) {
     return (
         <>
             <Navbar />
+
+            {excluido > 0 ? <Redirect to='/' /> : null}
+
             <div className="container-fluid">
                 {
                     carregando ? <div className="row mt-5"> <div class="spinner-border text-danger mx-auto" role="status"><span class="sr-only">Carregando...</span></div></div>
@@ -55,7 +65,7 @@ function EventoDetalhes(props) {
                                 <div className="col-md-3 col-sm-12 box-info p-3 my-2">
                                     <i className="fas fa-calendar-alt fa-2x"></i>
                                     <h5><strong>Data</strong></h5>
-                                    <span className="mt-3">{`${dateFormat.getDate()+1}/${dateFormat.getMonth()+1}/${dateFormat.getUTCFullYear()}`}</span>
+                                    <span className="mt-3">{`${dateFormat.getDate() + 1}/${dateFormat.getMonth() + 1}/${dateFormat.getUTCFullYear()}`}</span>
                                 </div>
 
                                 <div className="col-md-3 col-sm-12 box-info p-3 my-2">
@@ -78,7 +88,13 @@ function EventoDetalhes(props) {
                                     <Link to={`/editarevento/${props.match.params.id}`} className="btn-editar"><i className="fas fa-pen-square fa-3x"></i></Link>
                                     : ''
                             }
+                            {
+                                usuarioLogado === evento.usuario ?
+                                    <button onClick={remover} type="button" className="btn btn-lg btn-block mt-3 mb-4 btn-publicar">Remover Evento</button>
+                                    : null
+                            }
                         </div>
+
                 }
             </div>
         </>

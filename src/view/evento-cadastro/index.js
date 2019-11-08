@@ -21,6 +21,7 @@ function EventoCadastro(props) {
     const db = firebase.firestore();
 
     useEffect(() => {
+        if (props.match.params.id) {
             firebase.firestore().collection('eventos').doc(props.match.params.id).get().then(res => {
                 setTitulo(res.data().titulo)
                 setTipo(res.data().tipo)
@@ -29,27 +30,28 @@ function EventoCadastro(props) {
                 setHora(res.data().hora)
                 setFotoAtual(res.data().foto)
             });
+        }
     }, [carregando]);
 
     function atualizar() {
         setMsgTipo(null);
         setCarregando(1);
-        if(fotoNova)
-        storage.ref(`imagens/${fotoNova.name}`).put(fotoNova);
-            db.collection('eventos').doc(props.match.params.id).update({
-                titulo: titulo,
-                tipo: tipo,
-                detalhes: detalhes,
-                data: data,
-                hora: hora,
-                foto: fotoNova ? fotoNova.name : fotoAtual
-            }).then(() => {
-                setMsgTipo('sucesso');
-                setCarregando(0);
-            }).catch(err => {
-                setMsgTipo('erro');
-                setCarregando(0);
-            });
+        if (fotoNova)
+            storage.ref(`imagens/${fotoNova.name}`).put(fotoNova);
+        db.collection('eventos').doc(props.match.params.id).update({
+            titulo: titulo,
+            tipo: tipo,
+            detalhes: detalhes,
+            data: data,
+            hora: hora,
+            foto: fotoNova ? fotoNova.name : fotoAtual
+        }).then(() => {
+            setMsgTipo('sucesso');
+            setCarregando(0);
+        }).catch(err => {
+            setMsgTipo('erro');
+            setCarregando(0);
+        });
     }
 
     function cadastrar() {
@@ -88,7 +90,7 @@ function EventoCadastro(props) {
                 <form>
                     <div className="form-group">
                         <label>Título:</label>
-                        <input onChange={(e) => setTitulo(e.target.value)} type="text" className="form-control" value={titulo && titulo}/>
+                        <input onChange={(e) => setTitulo(e.target.value)} type="text" className="form-control" value={titulo && titulo} />
                     </div>
                     <div className="form-group">
                         <label>Tipo do evento:</label>
