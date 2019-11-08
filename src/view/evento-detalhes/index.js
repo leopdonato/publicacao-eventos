@@ -44,7 +44,7 @@ function EventoDetalhes(props) {
 
             <div className="container-fluid">
                 {
-                    carregando ? <div className="row mt-5"> <div class="spinner-border text-danger mx-auto" role="status"><span class="sr-only">Carregando...</span></div></div>
+                    carregando ? <div className="row mt-5"> <div className="spinner-border text-danger mx-auto" role="status"><span className="sr-only">Carregando...</span></div></div>
 
                         :
                         <div>

@@ -26,7 +26,7 @@ function Navbar() {
                                 <Link className="nav-link" to="/eventos/meus">Meus eventos</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" onClick={()=> dispatch({type:'LOG_OUT'})}>Sair</Link>
+                                <Link className="nav-link" to="" onClick={()=> dispatch({type:'LOG_OUT'})}>Sair</Link>
                             </li>
                         </>
                         :

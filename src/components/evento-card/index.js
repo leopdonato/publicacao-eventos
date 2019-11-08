@@ -4,7 +4,7 @@ import firebase from '../../config/firebase';
 
 import './evento-card.css';
 
-function EventoCard({key, id, img, titulo, detalhes, visualizacoes}) {
+function EventoCard({id, img, titulo, detalhes, visualizacoes}) {
 
     const [urlImagem, setUrlImagem] = useState();
 
